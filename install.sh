@@ -64,4 +64,17 @@ sudo apt-get remove certbot
 sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
 
-echo -e "${GREEN}DONE. Please logout and login then you can run docker commands without sudo${NC}"
+echo -e "${GREEN}Enabling BBR${NC}"
+
+if [ ! -f /etc/sysctl.d/999-custom-kernel-bbr.conf ]; then
+    echo 'net.core.default_qdisc=fq' | sudo tee -a /etc/sysctl.d/999-custom-kernel-bbr.conf
+    echo 'net.ipv4.tcp_congestion_control=bbr' | sudo tee -a /etc/sysctl.d/999-custom-kernel-bbr.conf
+
+    sudo sysctl --system
+fi
+
+echo -e "${GREEN}
+DONE.
+Please consider more steps:
+* change hostname in /etc/hostname
+* logout and login then you can run docker commands without sudo${NC}"
