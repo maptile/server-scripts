@@ -73,6 +73,10 @@ if [ ! -f /etc/sysctl.d/999-custom-kernel-bbr.conf ]; then
     sudo sysctl --system
 fi
 
+echo -e "${GREEN}Enabling BBR result${NC}"
+sysctl net.core.default_qdisc
+sysctl net.ipv4.tcp_congestion_control
+
 echo -e "${GREEN}
 DONE.
 Please consider more steps:
