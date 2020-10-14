@@ -77,4 +77,5 @@ echo -e "${GREEN}
 DONE.
 Please consider more steps:
 * change hostname in /etc/hostname
+* add other ssh pubkeys to ~/.ssh/authorized_keys
 * logout and login then you can run docker commands without sudo${NC}"
