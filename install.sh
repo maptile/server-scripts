@@ -17,7 +17,7 @@ sudo apt-get install -y \
     apt-transport-https \
     ca-certificates \
     curl \
-    gnupg-agent \
+    gpg-agent \
     software-properties-common \
     stow \
     tmux \
