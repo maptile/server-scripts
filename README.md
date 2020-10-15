@@ -15,6 +15,39 @@ There is not any guarantee. Use at your own risk.
 ```
 wget -nv -O- https://raw.githubusercontent.com/maptile/install-server/main/install.sh | sudo sh /dev/stdin
 ```
+
+# Extras
+
+## Create user ubuntu
+
+If the server doesn't have ubuntu user, it's better to create it.
+
+```
+sudo useradd -m -s /bin/bash ubuntu
+```
+
+If you don't want to type password when using sudo, append the following lines to /etc/sudoers.d/90-cloud-init-users
+
+```
+ubuntu ALL=(ALL) NOPASSWD:ALL
+```
+
+Add the coresponding pub keys to ~/.ssh/authorized_keys
+
+## Change sshd config
+
+```
+sudo vim /etc/ssh/sshd_config
+```
+
+change PermitRootLogin to no and PasswordAuthentication no
+
+Restart sshd server by
+
+```
+sudo systemctl restart sshd.service
+```
+
 # Look Inside
 
 This script will do basic system update and upgrade first. And will install the following components.
