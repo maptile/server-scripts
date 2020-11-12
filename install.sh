@@ -66,9 +66,8 @@ sudo ln -s /snap/bin/certbot /usr/bin/certbot
 
 echo -e "${GREEN}Enabling BBR${NC}"
 
-if [ ! -f /etc/sysctl.d/999-custom-kernel-bbr.conf ]; then
-    echo 'net.core.default_qdisc=fq' | sudo tee -a /etc/sysctl.d/999-custom-kernel-bbr.conf
-    echo 'net.ipv4.tcp_congestion_control=bbr' | sudo tee -a /etc/sysctl.d/999-custom-kernel-bbr.conf
+if [ ! -f /etc/sysctl.d/10-custom-kernel-bbr.conf ]; then
+    echo 'net.ipv4.tcp_congestion_control=bbr' | sudo tee -a /etc/sysctl.d/10-custom-kernel-bbr.conf
 
     sudo sysctl --system
 fi
