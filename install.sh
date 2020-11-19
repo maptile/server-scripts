@@ -21,7 +21,8 @@ sudo apt-get install -y \
     software-properties-common \
     stow \
     tmux \
-    vim
+    vim \
+    snapd
 
 echo -e "${GREEN}Remove unused components${NC}"
 sudo apt-get -y autoremove
@@ -55,7 +56,7 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 
 sudo groupadd docker
-sudo usermod -aG docker $USER
+# sudo usermod -aG docker $USER
 
 echo -e "${GREEN}Installing snap core and install certbot via snap${NC}"
 sudo snap install core
@@ -81,4 +82,5 @@ DONE.
 Please consider more steps:
 * change hostname in /etc/hostname
 * add other ssh pubkeys to ~/.ssh/authorized_keys
+* execute 'sudo usermod -aG docker $USER' to add current user to docker group
 * logout and login then you can run docker commands without sudo${NC}"
