@@ -13,7 +13,7 @@ There is not any guarantee. Use at your own risk.
 # Usage
 
 ```
-wget -nv -O- https://raw.githubusercontent.com/maptile/install-server/main/install.sh | sudo sh /dev/stdin
+wget -nv -O- https://raw.githubusercontent.com/maptile/server-scripts/main/install.sh | sudo sh /dev/stdin
 ```
 
 # Extras
