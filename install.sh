@@ -78,6 +78,12 @@ echo -e "${GREEN}Enabling BBR result${NC}"
 sysctl net.core.default_qdisc
 sysctl net.ipv4.tcp_congestion_control
 
+echo -e "${GREEN}Change Swappiness to 10${NC}"
+
+if [ ! -f /etc/sysctl.d/999-custom-swappiness.conf ]; then
+    echo 'vm.swappiness=10' | sudo tee -a /etc/sysctl.d/999-custom-swappiness.conf
+fi
+
 echo -e "${GREEN}
 DONE.
 Please consider more steps:
