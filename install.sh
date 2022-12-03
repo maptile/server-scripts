@@ -74,6 +74,14 @@ echo -e "${GREEN}Enabling BBR result${NC}"
 sysctl net.core.default_qdisc
 sysctl net.ipv4.tcp_congestion_control
 
+echo -e "${GREEN}Adding swapfile${NC}"
+
+sudo dd if=/dev/zero of=/swapfile1 bs=1024 count=1048576
+sudo chown root:root /swapfile1
+sudo chmod 0600 /swapfile1
+sudo mkswap /swapfile1
+sudo swapon /swapfile1
+
 echo -e "${GREEN}Change Swappiness to 10${NC}"
 
 if [ ! -f /etc/sysctl.d/999-custom-swappiness.conf ]; then
@@ -86,4 +94,5 @@ Please consider more steps:
 * change hostname in /etc/hostname
 * add other ssh pubkeys to ~/.ssh/authorized_keys
 * execute 'sudo usermod -aG docker $USER' to add current user to docker group
+* append '/swapfile1 none swap sw 0 0' to '/etc/fstab'
 * logout and login then you can run docker commands without sudo${NC}"
