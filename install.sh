@@ -18,6 +18,7 @@ sudo apt-get install -y \
     ca-certificates \
     curl \
     gpg-agent \
+    gnupg \
     software-properties-common \
     stow \
     tmux \
@@ -50,20 +51,21 @@ cd ~
 echo -e "${GREEN}Installing docker${NC}"
 sudo apt-get remove -y docker docker-engine docker.io containerd runc
 
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo apt-key fingerprint 0EBFCD88
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
 
-sudo add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
+echo \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 sudo apt-get update
 
-sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 sudo groupadd docker
-# sudo usermod -aG docker $USER
+sudo usermod -aG docker $USER
 
 echo -e "${GREEN}Installing snap core and install certbot via snap${NC}"
 sudo snap install core
@@ -104,6 +106,5 @@ DONE.
 Please consider more steps:
 * change hostname in /etc/hostname
 * add other ssh pubkeys to ~/.ssh/authorized_keys
-* execute 'sudo usermod -aG docker $USER' to add current user to docker group
 * append '/swapfile1 none swap sw 0 0' to '/etc/fstab'
 * logout and login then you can run docker commands without sudo${NC}"
