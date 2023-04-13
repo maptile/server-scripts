@@ -27,6 +27,17 @@ sudo apt-get install -y \
 echo -e "${GREEN}Remove unused components${NC}"
 sudo apt-get -y autoremove
 
+echo -e "${GREEN}Install ks to simplify server management${NC}"
+git clone https://github.com/maptile/ks.git ~/.ks
+
+if ! grep -q 'PATH="$HOME/.ks:$PATH"' ~/.profile ; then
+    sed -i '$ a\
+if [ -d "$HOME/.ks/" ] ; then\
+    PATH="$HOME/.ks:$PATH"\
+fi\
+  ' ~/.profile
+fi
+
 echo -e "${GREEN}Install dotfiles${NC}"
 git clone https://github.com/maptile/dotfiles.git ./.dotfiles
 
