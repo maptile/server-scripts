@@ -101,10 +101,15 @@ if [ ! -f /etc/sysctl.d/999-custom-swappiness.conf ]; then
     echo 'vm.swappiness=10' | sudo tee -a /etc/sysctl.d/999-custom-swappiness.conf
 fi
 
+if ! grep -q '/swapfile1 none swap sw 0 0' /etc/fstab ; then
+    sudo sed -i '$ a\
+/swapfile1 none swap sw 0 0\
+  ' /etc/fstab
+fi
+
 echo -e "${GREEN}
 DONE.
 Please consider more steps:
 * change hostname in /etc/hostname
 * add other ssh pubkeys to ~/.ssh/authorized_keys
-* append '/swapfile1 none swap sw 0 0' to '/etc/fstab'
 * logout and login then you can run docker commands without sudo${NC}"
